@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <body>
+  <label>Couleur de fond :</label>
+  <input type="color" id="color">
+  <button onclick="changeBackground()">Changer</button>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/dialogflow@0.6.0/javascript/dialogflow.min.js"></script>
+<script>
+  // Initialize the Dialogflow client
+  const client = new Dialogflow.Client({
+    accessToken: 'YOUR_ACCESS_TOKEN'
+  });
+
+  // Send a query to the Dialogflow agent
+  function sendQuery(query) {
+    client.textRequest(query)
+      .then(handleResponse)
+      .catch(handleError);
+  }
+
+  // Handle the Dialogflow response
+  function handleResponse(response) {
+    console.log(response);
+    var result = response.result.fulfillment.speech;
+    document.getElementById("chatbot").innerHTML = result;
+  }
+
+  // Handle errors
+  function handleError(error) {
+    console.error(error);
+  }
+</script>
+</head>
+<body>
+  <h1>MBBKbot</h1>
+  <input type="text" id="query" placeholder="Demander à MBBKbot...">
+  <button onclick="sendQuery(document.getElementById('query').value)">Send</button>
+  <br><br>
+  <div id="chatbot"></div>
+</body>
+</html>
